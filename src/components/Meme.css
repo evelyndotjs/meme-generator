@@ -24,3 +24,9 @@
   border: none;
   cursor: pointer;
 }
+
+.meme--img {
+  display: block;
+  max-width: 60%;
+  margin: 20px auto;
+}
