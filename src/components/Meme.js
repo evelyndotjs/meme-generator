@@ -3,12 +3,35 @@ import "./Meme.css";
 import data from "../data.js";
 
 function Meme() {
-  const [memeImage, setMemeImage] = useState("");
-  function handleClick() {
-    const memeData = data.data.memes;
-    const randomIndex = Math.floor(Math.random() * memeData.length);
+  const [meme, setMeme] = useState({
+    topText: "",
+    bottomText: "",
+    randomImage: "http://i.imgflip.com/1bij.jpg",
+  });
 
-    return setMemeImage(memeData[randomIndex].url);
+  const [allMemeImages, setAllMemeImages] = useState(data);
+
+  function handleClick() {
+    const randomNumber = Math.floor(
+      Math.random() * allMemeImages.data.memes.length
+    );
+
+    const randomMemeImage = allMemeImages.data.memes[randomNumber].url;
+
+    setMeme((prevState) => {
+      return {
+        ...prevState,
+        randomImage: randomMemeImage,
+      };
+    });
+  }
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setMeme((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
   return (
@@ -17,21 +40,29 @@ function Meme() {
         <input
           className="meme--input"
           type="text"
-          name="firstInput"
+          name="topText"
           placeholder="Top Text"
+          value={meme.topText}
+          onChange={handleChange}
         />
         <input
           className="meme--input"
           type="text"
-          name="secondInput"
+          name="bottomText"
           placeholder="Bottom Text"
+          value={meme.bottomText}
+          onChange={handleChange}
         />
         <br />
         <button onClick={handleClick} className="meme--btn" type="submit">
           Get a new meme image 🖼️
         </button>
       </div>
-      <img src={memeImage} alt="meme" className="meme--img" />
+      <div className="meme">
+        <img src={meme.randomImage} className="meme--img" alt="meme" />
+        <h2 className="meme--text top">{meme.topText}</h2>
+        <h2 className="meme--text bottom">{meme.bottomText}</h2>
+      </div>
     </main>
   );
 }
