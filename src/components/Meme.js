@@ -16,8 +16,6 @@ function Meme() {
       .then((data) => setAllMemes(data.data.memes));
   }, []);
 
-  console.log(allMemes);
-
   function handleClick() {
     const randomNumber = Math.floor(Math.random() * allMemes.length);
 
